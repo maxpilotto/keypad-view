@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Key">
+        <!-- Key's text -->
+        <attr name="keyValue" format="string"/>
+
+        <!-- Key's background -->
+        <attr name="keyBackground" format="reference"/>
+
+        <!-- Key's text color -->
+        <attr name="keyTextColor" format="color"/>
+
+        <!-- Key wrapper layout's background -->
+        <attr name="keyWrapperBackground" format="reference"/>
+
+        <!-- Size of the key's text -->
+        <attr name="keyTextSize" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="KeyPad">
+        <!-- Show/Hide the button on the bottom left, hidden by default -->
+        <attr name="showLeftButton" format="boolean"/>
+
+        <!-- Text of the bottom left button -->
+        <attr name="leftButtonText" format="string"/>
+
+        <!-- Show/Hide the button on the bottom right, hidden by default  -->
+        <attr name="showRightButton" format="boolean"/>
+
+        <!-- Text of the bottom right button -->
+        <attr name="rightButtonText" format="string"/>
+
+        <!-- Key's background for all keys -->
+        <attr name="keysBackground" format="reference"/>
+
+        <!-- Key's text color for all keys -->
+        <attr name="keysTextColor" format="color"/>
+
+        <!-- Key wrapper layout's background for all keys -->
+        <attr name="keysWrapperBackground" format="reference"/>
+
+        <!-- Size of the key's text for all keys -->
+        <attr name="keysTextSize" format="dimension"/>
+    </declare-styleable>
+</resources>
