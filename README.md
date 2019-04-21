@@ -5,9 +5,9 @@
 
 An Android view that can be used to display a keypad
 
-![](s1.png | height=150)
-![](s2.png | height=150)
-![](s3.png | height=150)
+<img src="https://github.com/maxpilotto/keypad-view/blob/master/s1.png" width="300">
+<img src="https://github.com/maxpilotto/keypad-view/blob/master/s2.png" width="300">
+<img src="https://github.com/maxpilotto/keypad-view/blob/master/s3.png" width="300">
 
 # How to add it to your project
 * Download the lastest release, you can find it [here](https://github.com/maxpilotto/keypad-view/releases) 
