@@ -131,7 +131,7 @@ The row will look like this
 ```
 
 ## Handling click events with a custom Keypad
-The Keypad class has a static `findAllKeys(ViewGroup,List<Key>)` that searches recursively for all Key view instances, this should be used like this
+The Keypad class has a static method `findAllKeys(ViewGroup,List<Key>)` that searches recursively for all Key view instances, this should be used like this
 ```java
 public void setAllKeysClickListener(){
     List<Key> keys = new ArrayList<>();
