@@ -174,7 +174,7 @@ keysTextSize|dimension|Text size of all keys
 keysTextColor|ColorInt|Text color of all keys
 
 ## Javadoc
-You can find the Javadoc [here](maxpilotto.com/docs/keypad-view/index.html)
+You can find the Javadoc [here](http://maxpilotto.com/docs/keypad-view/index.html)
 
 # License
 This is made available under the terms of the GPLv3. <br/>
