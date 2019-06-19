@@ -15,9 +15,8 @@ An Android view that can be used to display a keypad
 * Finally, add this to your module's build.gradle
 ```gradle 
 dependencies {
-    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
-    
-    compile project(':keypad-view')   //Add This line
+	implementation 'com.maxpilotto:keypad-view:1.0'
+}
 ```
 
 
