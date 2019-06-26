@@ -9,10 +9,7 @@ An Android view that can be used to display a keypad
 <img src="https://github.com/maxpilotto/keypad-view/blob/master/s2.png" width="300">
 <img src="https://github.com/maxpilotto/keypad-view/blob/master/s3.png" width="300">
 
-# How to add it to your project
-* Download the lastest release, you can find it [here](https://github.com/maxpilotto/keypad-view/releases) 
-* Open Android Studio and go to File > New > New module > Import .JAR/.AAR Package (Select the file downloaded previously)
-* Finally, add this to your module's build.gradle
+# Getting started
 ```gradle 
 dependencies {
 	implementation 'com.maxpilotto:keypad-view:1.0'
