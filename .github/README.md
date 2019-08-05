@@ -1,13 +1,9 @@
 # keypad-view
-
-[![API](https://img.shields.io/badge/API-14%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=14)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-
 An Android view that can be used to display a keypad
 
-<img src="https://github.com/maxpilotto/keypad-view/blob/master/s1.png" width="300">
-<img src="https://github.com/maxpilotto/keypad-view/blob/master/s2.png" width="300">
-<img src="https://github.com/maxpilotto/keypad-view/blob/master/s3.png" width="300">
+<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s1.png" width="300">
+<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s2.png" width="300">
+<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s3.png" width="300">
 
 # Getting started
 ```gradle 
