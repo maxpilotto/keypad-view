@@ -1,17 +1,17 @@
 # keypad-view
 An Android view that can be used to display a keypad
 
-<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s1.png" width="300">
-<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s2.png" width="300">
-<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s3.png" width="300">
+<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s1.png" width="200">
+<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s2.png" width="200">
+<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s3.png" width="200">
+<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s4.png" width="200">
 
 # Getting started
 ```gradle 
 dependencies {
-	implementation 'com.maxpilotto:keypad-view:1.0'
+	implementation 'com.maxpilotto:keypad-view:2.0'
 }
 ```
-
 
 # Usage
 ### XML
@@ -33,17 +33,22 @@ dependencies {
     app:rightButtonText="OK"
     app:keysTextColor="@android:color/holo_red_dark"
     app:keysBackground="@drawable/bg_red"
-    app:keysWrapperBackground="?attr/selectableItemBackground" />   //This is used to show the ripple effect, already set by default
+    app:keysWrapperBackground="?attr/selectableItemBackground" />
 ```
 
 ### Java
 ```Java
-KeyPad keyPad1 = findViewById(R.id.keypad1);
-keyPad1.setKeysTextColor(Color.GREEN);
-keypad1.setKeysBackground(R.drawable.bg_green);
-keyPad1.setKeyListener(new KeyPad.OnKeyClickListener() {
-    @Override public void onKeyClick(Key key) {
-        Toast.makeText(MainActivity.this, key.getKey() + " pressed", Toast.LENGTH_SHORT).show();
+KeyPad keypad = findViewById(R.id.keypad1);
+keypad.setOnClickListener(new KeyPad.KeyClickListener() {
+    @Override public void onClick(Key key) {
+        Log.d("KeyPadView", "Clicked: " + key.getKey());
+    }
+});
+keypad.setOnLongClickListener(new KeyPad.KeyLongClickListener() {
+    @Override public boolean onLongClick(Key key) {
+        Log.d("KeyPadView", "Long clicked: " + key.getKey());
+
+        return true;
     }
 });
 ```
@@ -57,7 +62,7 @@ Use the Key view to display the key of a keypad
     app:keyValue="1"/>
 ```
 To create a row you can use any method you like (GridLayout,TableLayout ..)  
-The Keypad view uses a wrapper around the Key and then a horizontal linear layout as a row, like the following
+The old Keypad layout used to have a wrapper around the Key and then a horizontal linear layout as a row, like the following
 ```xml
 <LinearLayout
     android:layout_width="wrap_content"
@@ -72,7 +77,7 @@ The Keypad view uses a wrapper around the Key and then a horizontal linear layou
 
 </LinearLayout>
 ```
-The row will look like this
+The row could look like this
 ```xml
 <LinearLayout
     android:layout_width="match_parent"
@@ -142,30 +147,7 @@ public void setAllKeysClickListener(){
 
 # Check out the [Demo](https://github.com/maxpilotto/keypad-view/releases)
 
-# Documentation
-
-## Key attributes
-Xml Attribute | Value/Type | Description 
---------------|------------|------------
-keyValue|string|Value of the key
-keyBackground|DrawableRes|Background of the key
-keyWrapperBackground|DrawableRes|Background of the outer key's layout
-keyTextSize|dimension|Text size of the key
-keyTextColor|ColorInt|Text color of the key
-
-## Keypad attributes
-Xml Attribute | Value/Type | Description 
---------------|------------|------------
-showLeftButton|boolean|Show/Hide the button on the bottom left, hidden by default
-showRightButton|boolean|Show/Hide the button on the bottom right, hidden by default
-leftButtonText|string|Bottom left button's text
-rightButtonText|string|Bottom right button's text
-keysBackground|DrawableRes|Background of all keys
-keysWrapperBackground|DrawableRes|Background of all keys' wrapper
-keysTextSize|dimension|Text size of all keys
-keysTextColor|ColorInt|Text color of all keys
-
-## Javadoc
+# Javadoc (v 1.0)
 You can find the Javadoc [here](http://maxpilotto.com/docs/keypad-view/index.html)
 
 # License
