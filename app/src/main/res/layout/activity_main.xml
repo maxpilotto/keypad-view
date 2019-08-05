@@ -7,8 +7,8 @@
 
     <com.maxpilotto.keypadview.KeyPad
         android:id="@+id/keypad1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
 
@@ -16,6 +16,6 @@
         app:leftKeyText="Ok"
         app:showRightKey="true"
         app:rightKeyText="CLR"
-        app:keysBackground="@drawable/bg_red" />
+        app:keysBackground="@drawable/bg_red"/>
 
 </LinearLayout>

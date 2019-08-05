@@ -2,13 +2,19 @@ package com.maxpilotto.keypadview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
@@ -72,7 +78,7 @@ public class KeyPad extends ConstraintLayout {
             );
 
             setKeysMargins(
-                    (int) array.getDimension(R.styleable.KeyPad_keysMargin,0)
+                    (int) array.getDimension(R.styleable.KeyPad_keysMargin, 0)
             );
 
             setAllKeysParams(array);
@@ -218,6 +224,37 @@ public class KeyPad extends ConstraintLayout {
 
             params.setMargins(left, top, right, bottom);
         }
+    }
+
+    /**
+     * Fixes the width for when WRAP_CONTENT is used <br> <br>
+     * Explanation: The view width won't work if WRAP_CONTENT is set, this is due to the ConstraintLayout, <br>
+     * the only way of fixing this is by calculating the minimum width and setting it
+     */
+    private void fixWidth() {    //FIXME Doesn't work
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override public void onGlobalLayout() {
+                Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+                ViewGroup.LayoutParams params = getLayoutParams();
+                DisplayMetrics metrics = new DisplayMetrics();
+
+                display.getMetrics(metrics);
+
+                int widthSpec = View.MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+                int heightSpec = View.MeasureSpec.makeMeasureSpec(metrics.heightPixels, MeasureSpec.AT_MOST);
+
+                measure(widthSpec, heightSpec);
+
+                params.width = getMeasuredWidth();
+                setLayoutParams(params);
+
+                if (Build.VERSION.SDK_INT < 16) {
+                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            }
+        });
     }
 
     /**
