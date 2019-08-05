@@ -12,10 +12,10 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
 
-        app:showLeftButton="true"
-        app:leftButtonText="Ok"
-        app:showRightButton="true"
-        app:rightButtonText="CLR"
+        app:showLeftKey="true"
+        app:leftKeyText="Ok"
+        app:showRightKey="true"
+        app:rightKeyText="CLR"
         app:keysBackground="@drawable/bg_red"/>
 
 </LinearLayout>

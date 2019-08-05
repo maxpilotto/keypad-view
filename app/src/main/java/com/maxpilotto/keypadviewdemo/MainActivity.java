@@ -29,5 +29,23 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        keypad.getKey(1).setKeyBackground(R.drawable.bg_green);
+        keypad.getKey(4).setKeyBackground(R.drawable.bg_green);
+        keypad.getKey(7).setKeyBackground(R.drawable.bg_green);
+        keypad.getLeftKey().setKeyBackground(R.drawable.bg_green);
+
+        keypad.getKey(2).setKeyBackground(R.drawable.key_background);
+        keypad.getKey(5).setKeyBackground(R.drawable.key_background);
+        keypad.getKey(8).setKeyBackground(R.drawable.key_background);
+
+        keypad.getKey(3).setKeyBackground(R.drawable.bg_red);
+        keypad.getKey(6).setKeyBackground(R.drawable.bg_red);
+        keypad.getKey(9).setKeyBackground(R.drawable.bg_red);
+        keypad.getRightKey().setKeyBackground(R.drawable.bg_red);
+
+        keypad.getKey(0).setKeyBackground(R.drawable.bg_blue);
+        keypad.setKeysTextColor(getResources().getColor(android.R.color.black));
     }
 }
+
