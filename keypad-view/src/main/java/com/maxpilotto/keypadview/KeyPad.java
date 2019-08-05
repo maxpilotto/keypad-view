@@ -64,6 +64,17 @@ public class KeyPad extends ConstraintLayout {
                 right.setVisibility(INVISIBLE);
             }
 
+            setKeysMargins(
+                    (int) array.getDimension(R.styleable.KeyPad_keysMarginLeft, 0),
+                    (int) array.getDimension(R.styleable.KeyPad_keysMarginTop, 0),
+                    (int) array.getDimension(R.styleable.KeyPad_keysMarginRight, 0),
+                    (int) array.getDimension(R.styleable.KeyPad_keysMarginBottom, 0)
+            );
+
+            setKeysMargins(
+                    (int) array.getDimension(R.styleable.KeyPad_keysMargin,0)
+            );
+
             setAllKeysParams(array);
 
             array.recycle();
@@ -125,8 +136,8 @@ public class KeyPad extends ConstraintLayout {
      * @return Key or null if not found
      */
     public Key getKey(String text) {
-        for (Key k : keys){
-            if (k.getKey().equals(text)){
+        for (Key k : keys) {
+            if (k.getKey().equals(text)) {
                 return k;
             }
         }
@@ -140,11 +151,11 @@ public class KeyPad extends ConstraintLayout {
      * @param value Integer value of the searched key
      * @return Key or null if not found
      */
-    public Key getKey(Integer value){
-        for (Key k : keys){
+    public Key getKey(Integer value) {
+        for (Key k : keys) {
             String str = String.valueOf(value);
 
-            if (k.getKey().equals(str)){
+            if (k.getKey().equals(str)) {
                 return k;
             }
         }
@@ -164,6 +175,102 @@ public class KeyPad extends ConstraintLayout {
         }
 
         return keys.get(position);
+    }
+
+    /**
+     * Sets the margins of the given key
+     *
+     * @param text   Text of the key to change
+     * @param left   Left margin
+     * @param top    Top margin
+     * @param right  Right margin
+     * @param bottom Bottom margin
+     */
+    public void setKeyMargins(String text, int left, int top, int right, int bottom) {
+        setKeyMargins(getKey(text), left, top, right, bottom);
+    }
+
+    /**
+     * Sets the margins of the given key
+     *
+     * @param value  Value of the key to change
+     * @param left   Left margin
+     * @param top    Top margin
+     * @param right  Right margin
+     * @param bottom Bottom margin
+     */
+    public void setKeyMargins(Integer value, int left, int top, int right, int bottom) {
+        setKeyMargins(getKey(value), left, top, right, bottom);
+    }
+
+    /**
+     * Sets the margins of the given key
+     *
+     * @param key    Key to change
+     * @param left   Left margin
+     * @param top    Top margin
+     * @param right  Right margin
+     * @param bottom Bottom margin
+     */
+    public void setKeyMargins(Key key, int left, int top, int right, int bottom) {
+        if (key != null) {
+            ConstraintLayout.LayoutParams params = (LayoutParams) key.getLayoutParams();
+
+            params.setMargins(left, top, right, bottom);
+        }
+    }
+
+    /**
+     * Sets the margins of the given key
+     *
+     * @param text   Text of the key to change
+     * @param margin Margin of all sides
+     */
+    public void setKeyMargins(String text, int margin) {
+        setKeyMargins(getKey(text), margin, margin, margin, margin);
+    }
+
+    /**
+     * Sets the margins of the given key
+     *
+     * @param value  Value of the key to change
+     * @param margin Margin of all sides
+     */
+    public void setKeyMargins(Integer value, int margin) {
+        setKeyMargins(getKey(value), margin, margin, margin, margin);
+    }
+
+    /**
+     * Sets the margins of the given key
+     *
+     * @param key    Key to change
+     * @param margin Margin of all sides
+     */
+    public void setKeyMargins(Key key, int margin) {
+        setKeyMargins(key, margin, margin, margin, margin);
+    }
+
+    /**
+     * Sets the all the keys' margins
+     *
+     * @param left   Left margin
+     * @param top    Top margin
+     * @param right  Right margin
+     * @param bottom Bottom margin
+     */
+    public void setKeysMargins(int left, int top, int right, int bottom) {
+        for (Key k : keys) {
+            setKeyMargins(k, left, top, right, bottom);
+        }
+    }
+
+    /**
+     * Sets the all the keys' margins
+     *
+     * @param margin Margin of all sides
+     */
+    public void setKeysMargins(int margin) {
+        setKeysMargins(margin, margin, margin, margin);
     }
 
     /**

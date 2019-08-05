@@ -16,6 +16,6 @@
         app:leftKeyText="Ok"
         app:showRightKey="true"
         app:rightKeyText="CLR"
-        app:keysBackground="@drawable/bg_red"/>
+        app:keysBackground="@drawable/bg_red" />
 
 </LinearLayout>

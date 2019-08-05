@@ -18,13 +18,13 @@ public class MainActivity extends AppCompatActivity {
 
         keypad.setOnClickListener(new KeyPad.KeyClickListener() {
             @Override public void onClick(Key key) {
-                Log.d("KeyPadView","Clicked: " + key.getKey());
+                Log.d("KeyPadView", "Clicked: " + key.getKey());
             }
         });
 
         keypad.setOnLongClickListener(new KeyPad.KeyLongClickListener() {
             @Override public boolean onLongClick(Key key) {
-                Log.d("KeyPadView","Long clicked: " + key.getKey());
+                Log.d("KeyPadView", "Long clicked: " + key.getKey());
 
                 return true;
             }
@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         keypad.getKey(0).setKeyBackground(R.drawable.bg_blue);
         keypad.setKeysTextColor(getResources().getColor(android.R.color.black));
+
+        keypad.setKeysMargins(30);
     }
 }
 

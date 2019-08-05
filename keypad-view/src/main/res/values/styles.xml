@@ -40,5 +40,20 @@
 
         <!-- Size of the key's text for all keys -->
         <attr name="keysTextSize" format="dimension"/>
+
+        <!-- Margin for each key -->
+        <attr name="keysMargin" format="dimension"/>
+
+        <!-- Margin top for each key -->
+        <attr name="keysMarginTop" format="dimension"/>
+
+        <!-- Margin left for each key -->
+        <attr name="keysMarginLeft" format="dimension"/>
+
+        <!-- Margin bottom for each key -->
+        <attr name="keysMarginBottom" format="dimension"/>
+
+        <!-- Margin right for each key -->
+        <attr name="keysMarginRight" format="dimension"/>
     </declare-styleable>
 </resources>
