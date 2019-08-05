@@ -14,8 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KeyPad extends LinearLayout {
-    public interface OnKeyClickListener {
-        void onKeyClick(Key key);
+    public interface KeyClickListener {
+        void onClick(Key key);
+    }
+
+    public interface KeyLongClickListener {
+        boolean onLongClick(Key key);
     }
 
     private Key left;
@@ -44,16 +48,16 @@ public class KeyPad extends LinearLayout {
             left.setKey(array.getString(R.styleable.KeyPad_leftButtonText));
             right.setKey(array.getString(R.styleable.KeyPad_rightButtonText));
 
-            if (array.getBoolean(R.styleable.KeyPad_showLeftButton,false)){
-                ((LinearLayout)left.getParent()).setVisibility(VISIBLE);
-            }else{
-                ((LinearLayout)left.getParent()).setVisibility(INVISIBLE);
+            if (array.getBoolean(R.styleable.KeyPad_showLeftButton, false)) {
+                left.setVisibility(VISIBLE);
+            } else {
+                left.setVisibility(INVISIBLE);
             }
 
-            if (array.getBoolean(R.styleable.KeyPad_showRightButton,false)){
-                ((LinearLayout)right.getParent()).setVisibility(VISIBLE);
-            }else{
-                ((LinearLayout)right.getParent()).setVisibility(INVISIBLE);
+            if (array.getBoolean(R.styleable.KeyPad_showRightButton, false)) {
+                right.setVisibility(VISIBLE);
+            } else {
+                right.setVisibility(INVISIBLE);
             }
 
             setAllKeysParams(array);
@@ -65,45 +69,68 @@ public class KeyPad extends LinearLayout {
     /**
      * Sets the left button text and makes it visible
      * Use setLeftButton(null) to hide the button
+     *
      * @param text Text, null to hide
      */
-    public void setLeftButton(String text){
-        if (text != null){
-            ((LinearLayout)left.getParent()).setVisibility(VISIBLE);
+    public void setLeftButton(String text) {
+        if (text != null) {
+            ((LinearLayout) left.getParent()).setVisibility(VISIBLE);
             left.setKey(text);
-        }else{
-            ((LinearLayout)left.getParent()).setVisibility(INVISIBLE);
+        } else {
+            ((LinearLayout) left.getParent()).setVisibility(INVISIBLE);
         }
     }
 
     /**
      * Sets the right button text and makes it visible
      * Use setRightButton(null) to hide the button
+     *
      * @param text Text, null to hide
      */
-    public void setRightButton(String text){
-        if (text != null){
-            ((LinearLayout)right.getParent()).setVisibility(VISIBLE);
+    public void setRightButton(String text) {
+        if (text != null) {
+            ((LinearLayout) right.getParent()).setVisibility(VISIBLE);
             right.setKey(text);
-        }else{
-            ((LinearLayout)right.getParent()).setVisibility(INVISIBLE);
+        } else {
+            ((LinearLayout) right.getParent()).setVisibility(INVISIBLE);
         }
     }
 
     /**
-     * Sets the key listener for each key, this will fetch dynamically all Key views
+     * Sets the click listener, which will be called every time a key is clicked
      *
-     * @param listener Listener
+     * @param click {@link KeyClickListener}
      */
-    public void setKeyListener(final OnKeyClickListener listener) {
+    public void setOnClickListener(final KeyClickListener click) {
         List<Key> keys = new ArrayList<>();
         findAllKeys(this, keys);
 
         for (Key k : keys) {
             final Key key = k;
-            k.setOnClickListener(new OnClickListener() {
-                @Override public void onClick(View v) {
-                    listener.onKeyClick(key);
+
+            key.setOnClickListener(new OnClickListener() {
+                @Override public void onClick(View view) {
+                    click.onClick(key);
+                }
+            });
+        }
+    }
+
+    /**
+     * Sets the long click listener, which will be called every time a key is long clicked
+     *
+     * @param click {@link KeyLongClickListener}
+     */
+    public void setOnLongClickListener(final KeyLongClickListener click) {
+        List<Key> keys = new ArrayList<>();
+        findAllKeys(this, keys);
+
+        for (Key k : keys) {
+            final Key key = k;
+
+            key.setOnLongClickListener(new OnLongClickListener() {
+                @Override public boolean onLongClick(View view) {
+                    return click.onLongClick(key);
                 }
             });
         }
@@ -111,56 +138,60 @@ public class KeyPad extends LinearLayout {
 
     /**
      * Sets the background drawable to all keys
+     *
      * @param background Background res
      */
-    public void setKeysBackground(@DrawableRes int background){
+    public void setKeysBackground(@DrawableRes int background) {
         List<Key> keys = new ArrayList<>();
 
-        findAllKeys(this,keys);
+        findAllKeys(this, keys);
 
-        for (Key k : keys){
+        for (Key k : keys) {
             k.setKeyBackground(background);
         }
     }
 
     /**
      * Sets the key text color to all keys
+     *
      * @param color ColorInt
      */
-    public void setKeysTextColor(@ColorInt int color){
+    public void setKeysTextColor(@ColorInt int color) {
         List<Key> keys = new ArrayList<>();
 
-        findAllKeys(this,keys);
+        findAllKeys(this, keys);
 
-        for (Key k : keys){
+        for (Key k : keys) {
             k.setKeyTextColor(color);
         }
     }
 
     /**
      * Sets the wrapper's background to all keys
+     *
      * @param background Background res
      */
-    public void setKeysWrapperBackground(@DrawableRes int background){
+    public void setKeysWrapperBackground(@DrawableRes int background) {
         List<Key> keys = new ArrayList<>();
 
-        findAllKeys(this,keys);
+        findAllKeys(this, keys);
 
-        for (Key k : keys){
+        for (Key k : keys) {
             k.setKeyWrapperBackground(background);
         }
     }
 
     /**
      * Sets the key text size to all keys
+     *
      * @param dp Text size in dp
      */
-    public void setKeysTextSize(int dp){
+    public void setKeysTextSize(int dp) {
         List<Key> keys = new ArrayList<>();
 
-        findAllKeys(this,keys);
+        findAllKeys(this, keys);
 
-        for (Key k : keys){
+        for (Key k : keys) {
             k.setKeyTextSize(dp);
         }
     }
@@ -186,16 +217,16 @@ public class KeyPad extends LinearLayout {
     /**
      * Applies the attributes to all keys
      */
-    private void setAllKeysParams(TypedArray a){
+    private void setAllKeysParams(TypedArray a) {
         List<Key> keys = new ArrayList<>();
-        int background = a.getResourceId(R.styleable.KeyPad_keysBackground,R.drawable.key_background);
-        int textColor = a.getColor(R.styleable.KeyPad_keysTextColor,getResources().getColor(android.R.color.darker_gray) );
-        int wrapperBackground = a.getResourceId(R.styleable.KeyPad_keysWrapperBackground,0);
-        float textSize = a.getDimension(R.styleable.Key_keyTextSize,(int) (22 * getContext().getResources().getDisplayMetrics().density));
+        int background = a.getResourceId(R.styleable.KeyPad_keysBackground, R.drawable.key_background);
+        int textColor = a.getColor(R.styleable.KeyPad_keysTextColor, getResources().getColor(android.R.color.darker_gray));
+        int wrapperBackground = a.getResourceId(R.styleable.KeyPad_keysWrapperBackground, 0);
+        float textSize = a.getDimension(R.styleable.Key_keyTextSize, (int) (22 * getContext().getResources().getDisplayMetrics().density));
 
-        findAllKeys(this,keys);
+        findAllKeys(this, keys);
 
-        for (Key k : keys){
+        for (Key k : keys) {
             k.getText().setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
                     textSize

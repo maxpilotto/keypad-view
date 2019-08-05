@@ -16,7 +16,7 @@ public class Key extends LinearLayout {
     private TextView text;
 
     public Key(Context context) {
-        this(context,null,0);
+        this(context, null, 0);
     }
 
     public Key(Context context, AttributeSet attrs) {
@@ -26,12 +26,12 @@ public class Key extends LinearLayout {
     public Key(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        inflate(context,R.layout.key, this);
+        inflate(context, R.layout.key, this);
 
         root = findViewById(R.id.root);
         text = findViewById(R.id.text);
 
-        if (attrs != null){
+        if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Key, defStyleAttr, 0);
 
             text.setText(a.getString(R.styleable.Key_keyValue));
@@ -39,7 +39,7 @@ public class Key extends LinearLayout {
                     R.styleable.Key_keyTextColor,
                     getResources().getColor(android.R.color.darker_gray)
             ));
-            text.setBackgroundResource(a.getResourceId(R.styleable.Key_keyBackground,R.drawable.key_background));
+            text.setBackgroundResource(a.getResourceId(R.styleable.Key_keyBackground, R.drawable.key_background));
 
             text.setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
@@ -53,6 +53,12 @@ public class Key extends LinearLayout {
         }
     }
 
+    @Override public void setOnLongClickListener(View.OnLongClickListener l) {
+        //NOTE: Without this the view won't be clickable
+
+        root.setOnLongClickListener(l);
+    }
+
     @Override public void setOnClickListener(View.OnClickListener l) {
         //NOTE: Without this the view won't be clickable
 
@@ -61,49 +67,55 @@ public class Key extends LinearLayout {
 
     /**
      * Sets the text of the key
+     *
      * @param key Key's text
      */
-    public void setKey(String key){
+    public void setKey(String key) {
         text.setText(key);
     }
 
     /**
      * Returns the text of the key
+     *
      * @return Key's text
      */
-    public String getKey(){
+    public String getKey() {
         return text.getText().toString();
     }
 
     /**
      * Sets the key background, by default it is a gray circle
+     *
      * @param res Background
      */
-    public void setKeyBackground(@DrawableRes int res){
+    public void setKeyBackground(@DrawableRes int res) {
         text.setBackgroundResource(res);
     }
 
     /**
      * Returns the key background
+     *
      * @return Background
      */
-    public Drawable getKeyBackground(){
+    public Drawable getKeyBackground() {
         return text.getBackground();
     }
 
     /**
      * Sets the key text color, gray by default
+     *
      * @param color ColorInt
      */
-    public void setKeyTextColor(@ColorInt int color){
+    public void setKeyTextColor(@ColorInt int color) {
         text.setTextColor(color);
     }
 
     /**
      * Returns the text color
+     *
      * @return ColorInt
      */
-    public @ColorInt int getKetTextColor(){
+    public @ColorInt int getKetTextColor() {
         return text.getCurrentTextColor();
     }
 
@@ -128,15 +140,16 @@ public class Key extends LinearLayout {
      * Sets the text size of the key
      * @param dp Size in DP
      */
-    public void setKeyTextSize(int dp){
+    public void setKeyTextSize(int dp) {
         text.setTextSize(dp * getContext().getResources().getDisplayMetrics().density);
     }
 
     /**
      * Returns the reference to the textview
+     *
      * @return Textview reference
      */
-    public TextView getText(){
+    public TextView getText() {
         return text;
     }
 }
