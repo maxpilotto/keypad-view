@@ -18,16 +18,16 @@
     </declare-styleable>
     <declare-styleable name="KeyPad">
         <!-- Show/Hide the button on the bottom left, hidden by default -->
-        <attr name="showLeftButton" format="boolean"/>
+        <attr name="showLeftKey" format="boolean"/>
 
         <!-- Text of the bottom left button -->
-        <attr name="leftButtonText" format="string"/>
+        <attr name="leftKeyText" format="string"/>
 
         <!-- Show/Hide the button on the bottom right, hidden by default  -->
-        <attr name="showRightButton" format="boolean"/>
+        <attr name="showRightKey" format="boolean"/>
 
         <!-- Text of the bottom right button -->
-        <attr name="rightButtonText" format="string"/>
+        <attr name="rightKeyText" format="string"/>
 
         <!-- Key's background for all keys -->
         <attr name="keysBackground" format="reference"/>
