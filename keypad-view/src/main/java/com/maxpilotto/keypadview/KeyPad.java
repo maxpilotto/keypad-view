@@ -8,7 +8,6 @@ import android.support.annotation.DrawableRes;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,11 +52,15 @@ public class KeyPad extends ConstraintLayout {
             keys = new ArrayList<>();
             findAllKeys(this, keys);
 
+            for (int i = 0; i < keys.size(); i++) {
+                keys.get(i).setPosition(i);
+            }
+
             left = findViewById(R.id.left);
             right = findViewById(R.id.right);
 
-            left.setKey(array.getString(R.styleable.KeyPad_leftKeyText));
-            right.setKey(array.getString(R.styleable.KeyPad_rightKeyText));
+            left.setValue(array.getString(R.styleable.KeyPad_leftKeyText));
+            right.setValue(array.getString(R.styleable.KeyPad_rightKeyText));
 
             if (array.getBoolean(R.styleable.KeyPad_showLeftKey, false)) {
                 left.setVisibility(VISIBLE);
@@ -96,7 +100,7 @@ public class KeyPad extends ConstraintLayout {
     public void setLeftKey(String text) {
         if (text != null) {
             ((LinearLayout) left.getParent()).setVisibility(VISIBLE);
-            left.setKey(text);
+            left.setValue(text);
         } else {
             ((LinearLayout) left.getParent()).setVisibility(INVISIBLE);
         }
@@ -111,7 +115,7 @@ public class KeyPad extends ConstraintLayout {
     public void setRightKey(String text) {
         if (text != null) {
             ((LinearLayout) right.getParent()).setVisibility(VISIBLE);
-            right.setKey(text);
+            right.setValue(text);
         } else {
             ((LinearLayout) right.getParent()).setVisibility(INVISIBLE);
         }
@@ -143,7 +147,7 @@ public class KeyPad extends ConstraintLayout {
      */
     public Key getKey(String text) {
         for (Key k : keys) {
-            if (k.getKey().equals(text)) {
+            if (k.getValue().equals(text)) {
                 return k;
             }
         }
@@ -161,7 +165,7 @@ public class KeyPad extends ConstraintLayout {
         for (Key k : keys) {
             String str = String.valueOf(value);
 
-            if (k.getKey().equals(str)) {
+            if (k.getValue().equals(str)) {
                 return k;
             }
         }
@@ -416,7 +420,7 @@ public class KeyPad extends ConstraintLayout {
         float textSize = a.getDimension(R.styleable.Key_keyTextSize, (int) (22 * getContext().getResources().getDisplayMetrics().density));
 
         for (Key k : keys) {
-            k.getText().setTextSize(
+            ((TextView)k.getView()).setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
                     textSize
             );

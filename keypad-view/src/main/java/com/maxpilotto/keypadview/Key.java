@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class Key extends LinearLayout {
     private LinearLayout root;
     private TextView text;
+    private int position;
 
     public Key(Context context) {
         this(context, null, 0);
@@ -45,8 +46,8 @@ public class Key extends LinearLayout {
                     TypedValue.COMPLEX_UNIT_PX,
                     a.getDimensionPixelSize(R.styleable.Key_keyTextSize, (int) (22 * context.getResources().getDisplayMetrics().density)));
 
-            if (a.getResourceId(R.styleable.Key_keyWrapperBackground,0) != 0){
-                root.setBackgroundResource(a.getResourceId(R.styleable.Key_keyWrapperBackground,0));
+            if (a.getResourceId(R.styleable.Key_keyWrapperBackground, 0) != 0) {
+                root.setBackgroundResource(a.getResourceId(R.styleable.Key_keyWrapperBackground, 0));
             }
 
             a.recycle();
@@ -66,11 +67,29 @@ public class Key extends LinearLayout {
     }
 
     /**
+     * Returns the position of the Key inside the Keypad, this can be used as a unique identifier
+     *
+     * @return Position of the Key inside the Keypad
+     */
+    public int getPosition() {
+        return position;
+    }
+
+    /**
+     * Sets the position of the Key, this will just set the position index and NOT change the layout
+     *
+     * @param position Position
+     */
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    /**
      * Sets the text of the key
      *
      * @param key Key's text
      */
-    public void setKey(String key) {
+    public void setValue(String key) {
         text.setText(key);
     }
 
@@ -79,7 +98,7 @@ public class Key extends LinearLayout {
      *
      * @return Key's text
      */
-    public String getKey() {
+    public String getValue() {
         return text.getText().toString();
     }
 
@@ -121,23 +140,26 @@ public class Key extends LinearLayout {
 
     /**
      * Returns the wrapper layout's background
+     *
      * @return Background
      */
-    public Drawable getKeyWrapperBackground(){
+    public Drawable getKeyWrapperBackground() {
         return root.getBackground();
     }
 
     /**
      * Sets the wrapper layout's background, this will disable the ripple effect
      * If you want to set your own background and keep the ripple effect, you have to implement the ripple animation by yourself
+     *
      * @param res Background
      */
-    public void setKeyWrapperBackground(@DrawableRes int res){
+    public void setKeyWrapperBackground(@DrawableRes int res) {
         root.setBackgroundResource(res);
     }
 
     /**
      * Sets the text size of the key
+     *
      * @param dp Size in DP
      */
     public void setKeyTextSize(int dp) {
@@ -145,11 +167,11 @@ public class Key extends LinearLayout {
     }
 
     /**
-     * Returns the reference to the textview
+     * Returns the view of the Key, this can be used for further customization
      *
-     * @return Textview reference
+     * @return View of the Key
      */
-    public TextView getText() {
+    public View getView() {
         return text;
     }
 }

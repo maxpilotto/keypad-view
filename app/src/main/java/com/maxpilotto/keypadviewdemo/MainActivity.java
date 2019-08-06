@@ -18,13 +18,13 @@ public class MainActivity extends AppCompatActivity {
 
         keypad.setOnClickListener(new KeyPad.KeyClickListener() {
             @Override public void onClick(Key key) {
-                Log.d("KeyPadView", "Clicked: " + key.getKey());
+                Log.d("KeyPadView", "Clicked: " + key.getValue());
             }
         });
 
         keypad.setOnLongClickListener(new KeyPad.KeyLongClickListener() {
             @Override public boolean onLongClick(Key key) {
-                Log.d("KeyPadView", "Long clicked: " + key.getKey());
+                Log.d("KeyPadView", "Long clicked: " + key.getValue());
 
                 return true;
             }

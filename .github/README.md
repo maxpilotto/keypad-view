@@ -9,7 +9,12 @@ An Android view that can be used to display a keypad
 # Getting started
 ```gradle 
 dependencies {
-	implementation 'com.maxpilotto:keypad-view:2.0'
+	implementation 'com.maxpilotto:keypad-view:3.0'
+	
+	
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'		// If you ARE NOT using AndroidX
+	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'	// If you ARE using AndroidX
+
 }
 ```
 
