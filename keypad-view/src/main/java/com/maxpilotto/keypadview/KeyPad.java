@@ -417,7 +417,7 @@ public class KeyPad extends ConstraintLayout {
         int background = a.getResourceId(R.styleable.KeyPad_keysBackground, R.drawable.key_background);
         int textColor = a.getColor(R.styleable.KeyPad_keysTextColor, getResources().getColor(android.R.color.darker_gray));
         int wrapperBackground = a.getResourceId(R.styleable.KeyPad_keysWrapperBackground, 0);
-        float textSize = a.getDimension(R.styleable.Key_keyTextSize, (int) (22 * getContext().getResources().getDisplayMetrics().density));
+        int txtSize = a.getDimensionPixelSize(R.styleable.KeyPad_keysTextSize, 0);
 
         for (Key k : keys) {
             ((TextView)k.getView()).setTextSize(
