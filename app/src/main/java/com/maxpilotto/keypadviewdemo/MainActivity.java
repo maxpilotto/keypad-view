@@ -3,6 +3,7 @@ package com.maxpilotto.keypadviewdemo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 
 import com.maxpilotto.keypadview.Key;
 import com.maxpilotto.keypadview.KeyPad;
@@ -42,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
         keypad.getKey(0).setKeyBackground(R.drawable.bg_blue);
 
         keypad.getRightKey().setKeyBackground(0);
+        keypad.getRightKey().setIconSize(
+                (int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        15,
+                        getResources().getDisplayMetrics()
+                )
+        );
 
         keypad.setKeysMargins(30);
     }

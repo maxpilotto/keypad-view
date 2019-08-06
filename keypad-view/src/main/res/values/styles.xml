@@ -22,8 +22,8 @@
         <!-- Tint of the icon -->
         <attr name="keyTint" format="color"/>
 
-        <!-- Size of the icon, this covers both width and height -->
-        <attr name="keyIconSize" format="integer"/>
+        <!-- Size of the key's icon, this covers both width and height -->
+        <attr name="keyIconSize" format="dimension"/>
     </declare-styleable>
     <declare-styleable name="KeyPad">
         <!-- Text of the bottom left button -->
@@ -68,7 +68,7 @@
         <!-- Tint for all keys that are icons -->
         <attr name="keysIconTint" format="color"/>
 
-        <!-- icon size for all keys -->
-        <attr name="keysIconSize" format="integer"/>
+        <!-- Size for all keys that are icons -->
+        <attr name="keysIconSize" format="dimension"/>
     </declare-styleable>
 </resources>

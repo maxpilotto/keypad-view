@@ -10,10 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:keysBackground="@android:color/transparent"
-        app:leftKeyText="E"
-        app:rightKeyText="E"
         app:rightKeyIcon="@drawable/check"
         app:keysTextSize="20dp"
-        app:keysIconTint="@color/colorPrimary" />
+        app:keysIconTint="@color/colorPrimary"
+        app:keysIconSize="30dp"/>
 
 </LinearLayout>
