@@ -2,18 +2,25 @@ package com.maxpilotto.keypadview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Key extends LinearLayout {
+    public static final float DEFAULT_TEXT_SIZE_SP = 20;
+
     private LinearLayout root;
     private TextView text;
+    private ImageView icon;
     private int position;
 
     public Key(Context context) {
@@ -31,23 +38,39 @@ public class Key extends LinearLayout {
 
         root = findViewById(R.id.root);
         text = findViewById(R.id.text);
+        icon = findViewById(R.id.icon);
 
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Key, defStyleAttr, 0);
+            int txtSize = a.getDimensionPixelSize(R.styleable.Key_keyTextSize, 0);
 
-            text.setText(a.getString(R.styleable.Key_keyValue));
-            text.setTextColor(a.getColor(
+            setText(a.getString(R.styleable.Key_keyValue));
+            setTextColor(a.getColor(
                     R.styleable.Key_keyTextColor,
                     getResources().getColor(android.R.color.darker_gray)
             ));
-            text.setBackgroundResource(a.getResourceId(R.styleable.Key_keyBackground, R.drawable.key_background));
+            setKeyBackground(a.getResourceId(R.styleable.Key_keyBackground, R.drawable.key_background));
 
-            text.setTextSize(
-                    TypedValue.COMPLEX_UNIT_PX,
-                    a.getDimensionPixelSize(R.styleable.Key_keyTextSize, (int) (22 * context.getResources().getDisplayMetrics().density)));
+            if (txtSize != 0) {
+                text.setTextSize(TypedValue.COMPLEX_UNIT_PX, txtSize);
+            } else {
+                text.setTextSize(DEFAULT_TEXT_SIZE_SP);
+            }
+
+            if (a.getInteger(R.styleable.Key_keyIconSize, 0) != 0) {
+                setIconSize(a.getInteger(R.styleable.Key_keyIconSize, 0));
+            }
 
             if (a.getResourceId(R.styleable.Key_keyWrapperBackground, 0) != 0) {
-                root.setBackgroundResource(a.getResourceId(R.styleable.Key_keyWrapperBackground, 0));
+                setWrapperBackground(a.getResourceId(R.styleable.Key_keyWrapperBackground, 0));
+            }
+
+            if (a.getResourceId(R.styleable.Key_keyIcon, 0) != 0) {
+                setIcon(a.getResourceId(R.styleable.Key_keyIcon, 0));
+            }
+
+            if (a.getColor(R.styleable.Key_keyTint, 0) != 0) {
+                setIconTint(a.getColor(R.styleable.Key_keyTint, 0));
             }
 
             a.recycle();
@@ -85,12 +108,14 @@ public class Key extends LinearLayout {
     }
 
     /**
-     * Sets the text of the key
+     * Sets the text of the key, this will hide the icon
      *
-     * @param key Key's text
+     * @param value Key's text
      */
-    public void setValue(String key) {
-        text.setText(key);
+    public void setText(String value) {
+        hideIcon();
+
+        text.setText(value);
     }
 
     /**
@@ -98,8 +123,26 @@ public class Key extends LinearLayout {
      *
      * @return Key's text
      */
-    public String getValue() {
+    public String getText() {
         return text.getText().toString();
+    }
+
+    /**
+     * Sets the icon to this Key, this will hide the text
+     *
+     * @param iconRes Icon res
+     */
+    public void setIcon(@DrawableRes int iconRes) {
+        hideText();
+
+        icon.setImageResource(iconRes);
+    }
+
+    /**
+     * Sets the tint to the icon
+     */
+    public void setIconTint(@ColorInt int color) {
+        icon.setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
 
     /**
@@ -109,6 +152,7 @@ public class Key extends LinearLayout {
      */
     public void setKeyBackground(@DrawableRes int res) {
         text.setBackgroundResource(res);
+        icon.setBackgroundResource(res);
     }
 
     /**
@@ -125,17 +169,8 @@ public class Key extends LinearLayout {
      *
      * @param color ColorInt
      */
-    public void setKeyTextColor(@ColorInt int color) {
+    public void setTextColor(@ColorInt int color) {
         text.setTextColor(color);
-    }
-
-    /**
-     * Returns the text color
-     *
-     * @return ColorInt
-     */
-    public @ColorInt int getKetTextColor() {
-        return text.getCurrentTextColor();
     }
 
     /**
@@ -143,7 +178,7 @@ public class Key extends LinearLayout {
      *
      * @return Background
      */
-    public Drawable getKeyWrapperBackground() {
+    public Drawable getWrapperBackground() {
         return root.getBackground();
     }
 
@@ -153,25 +188,67 @@ public class Key extends LinearLayout {
      *
      * @param res Background
      */
-    public void setKeyWrapperBackground(@DrawableRes int res) {
+    public void setWrapperBackground(@DrawableRes int res) {
         root.setBackgroundResource(res);
     }
 
     /**
      * Sets the text size of the key
      *
-     * @param dp Size in DP
+     * @param sp Size in SP
      */
-    public void setKeyTextSize(int dp) {
-        text.setTextSize(dp * getContext().getResources().getDisplayMetrics().density);
+    public void setTextSize(float sp) {
+        text.setTextSize(sp);
     }
 
     /**
-     * Returns the view of the Key, this can be used for further customization
+     * Sets the sizes of the icon, this will set both width and height
      *
-     * @return View of the Key
+     * @param size Sizes (width and height) in DP
      */
-    public View getView() {
+    public void setIconSize(int size) {
+        LinearLayout.LayoutParams params = (LayoutParams) icon.getLayoutParams();
+        int pixels = (int) (size * ((float) getContext().getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+
+        params.width = pixels;
+        params.height = pixels;
+    }
+
+    /**
+     * Returns the TextView that's used to display text, this is used for further customization
+     *
+     * @return Text's view
+     */
+    public TextView getTextView() {
         return text;
+    }
+
+    /**
+     * Returns the ImageView that's used as icon, this is used for further customization
+     *
+     * @return Icon's view
+     */
+    public ImageView getImageView() {
+        return icon;
+    }
+
+    /**
+     * Replaces the text with an icon
+     */
+    public void hideIcon() {
+        if (text.getVisibility() == GONE && icon.getVisibility() == VISIBLE) {
+            text.setVisibility(VISIBLE);
+            icon.setVisibility(GONE);
+        }
+    }
+
+    /**
+     * Replaces the icon with a text
+     */
+    public void hideText() {
+        if (text.getVisibility() == VISIBLE && icon.getVisibility() == GONE) {
+            text.setVisibility(GONE);
+            icon.setVisibility(VISIBLE);
+        }
     }
 }

@@ -7,15 +7,13 @@
 
     <com.maxpilotto.keypadview.KeyPad
         android:id="@+id/keypad1"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-
-        app:showLeftKey="true"
-        app:leftKeyText="Ok"
-        app:showRightKey="true"
-        app:rightKeyText="CLR"
-        app:keysBackground="@drawable/bg_red"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:keysBackground="@android:color/transparent"
+        app:leftKeyText="E"
+        app:rightKeyText="E"
+        app:rightKeyIcon="@drawable/check"
+        app:keysTextSize="20dp"
+        app:keysIconTint="@color/colorPrimary" />
 
 </LinearLayout>

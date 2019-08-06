@@ -6,7 +6,8 @@
     android:background="?attr/selectableItemBackgroundBorderless"
     android:clickable="true"
     android:focusable="true"
-    android:id="@+id/root">
+    android:id="@+id/root"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/text"
@@ -15,6 +16,15 @@
         android:background="@drawable/key_background"
         android:gravity="center"
         android:textSize="24sp"
-        android:text="K"/>
+        android:text="K"
+        android:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@drawable/key_background"
+        android:visibility="gone" />
 
 </LinearLayout>

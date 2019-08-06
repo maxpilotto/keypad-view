@@ -15,19 +15,28 @@
 
         <!-- Size of the key's text -->
         <attr name="keyTextSize" format="dimension"/>
+
+        <!-- Icon of the Key, will replace the text -->
+        <attr name="keyIcon" format="reference"/>
+
+        <!-- Tint of the icon -->
+        <attr name="keyTint" format="color"/>
+
+        <!-- Size of the icon, this covers both width and height -->
+        <attr name="keyIconSize" format="integer"/>
     </declare-styleable>
     <declare-styleable name="KeyPad">
-        <!-- Show/Hide the button on the bottom left, hidden by default -->
-        <attr name="showLeftKey" format="boolean"/>
-
         <!-- Text of the bottom left button -->
         <attr name="leftKeyText" format="string"/>
 
-        <!-- Show/Hide the button on the bottom right, hidden by default  -->
-        <attr name="showRightKey" format="boolean"/>
-
         <!-- Text of the bottom right button -->
         <attr name="rightKeyText" format="string"/>
+
+        <!-- Icon of the right key, will override the text -->
+        <attr name="rightKeyIcon" format="reference"/>
+
+        <!-- Icon of the left key, will override the text -->
+        <attr name="leftKeyIcon" format="reference"/>
 
         <!-- Key's background for all keys -->
         <attr name="keysBackground" format="reference"/>
@@ -55,5 +64,11 @@
 
         <!-- Margin right for each key -->
         <attr name="keysMarginRight" format="dimension"/>
+
+        <!-- Tint for all keys that are icons -->
+        <attr name="keysIconTint" format="color"/>
+
+        <!-- icon size for all keys -->
+        <attr name="keysIconSize" format="integer"/>
     </declare-styleable>
 </resources>
