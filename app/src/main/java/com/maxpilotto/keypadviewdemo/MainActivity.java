@@ -18,13 +18,13 @@ public class MainActivity extends AppCompatActivity {
 
         keypad.setOnClickListener(new KeyPad.KeyClickListener() {
             @Override public void onClick(Key key) {
-                Log.d("KeyPadView", "Clicked: " + key.getValue());
+                Log.d("KeyPadView", "Clicked: " + key.getText());
             }
         });
 
         keypad.setOnLongClickListener(new KeyPad.KeyLongClickListener() {
             @Override public boolean onLongClick(Key key) {
-                Log.d("KeyPadView", "Long clicked: " + key.getValue());
+                Log.d("KeyPadView", "Long clicked: " + key.getText());
 
                 return true;
             }
@@ -33,19 +33,15 @@ public class MainActivity extends AppCompatActivity {
         keypad.getKey(1).setKeyBackground(R.drawable.bg_green);
         keypad.getKey(4).setKeyBackground(R.drawable.bg_green);
         keypad.getKey(7).setKeyBackground(R.drawable.bg_green);
-        keypad.getLeftKey().setKeyBackground(R.drawable.bg_green);
-
         keypad.getKey(2).setKeyBackground(R.drawable.key_background);
         keypad.getKey(5).setKeyBackground(R.drawable.key_background);
         keypad.getKey(8).setKeyBackground(R.drawable.key_background);
-
         keypad.getKey(3).setKeyBackground(R.drawable.bg_red);
         keypad.getKey(6).setKeyBackground(R.drawable.bg_red);
         keypad.getKey(9).setKeyBackground(R.drawable.bg_red);
-        keypad.getRightKey().setKeyBackground(R.drawable.bg_red);
-
         keypad.getKey(0).setKeyBackground(R.drawable.bg_blue);
-        keypad.setKeysTextColor(getResources().getColor(android.R.color.black));
+
+        keypad.getRightKey().setKeyBackground(0);
 
         keypad.setKeysMargins(30);
     }

@@ -8,14 +8,13 @@ import android.support.annotation.DrawableRes;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +49,7 @@ public class KeyPad extends ConstraintLayout {
             inflate(context, R.layout.keypad, this);
 
             keys = new ArrayList<>();
+
             findAllKeys(this, keys);
 
             for (int i = 0; i < keys.size(); i++) {
@@ -59,19 +59,14 @@ public class KeyPad extends ConstraintLayout {
             left = findViewById(R.id.left);
             right = findViewById(R.id.right);
 
-            left.setValue(array.getString(R.styleable.KeyPad_leftKeyText));
-            right.setValue(array.getString(R.styleable.KeyPad_rightKeyText));
-
-            if (array.getBoolean(R.styleable.KeyPad_showLeftKey, false)) {
+            if (array.getString(R.styleable.KeyPad_leftKeyText) != null){
+                left.setText(array.getString(R.styleable.KeyPad_leftKeyText));
                 left.setVisibility(VISIBLE);
-            } else {
-                left.setVisibility(INVISIBLE);
             }
 
-            if (array.getBoolean(R.styleable.KeyPad_showRightKey, false)) {
+            if (array.getString(R.styleable.KeyPad_rightKeyText) != null){
+                right.setText(array.getString(R.styleable.KeyPad_rightKeyText));
                 right.setVisibility(VISIBLE);
-            } else {
-                right.setVisibility(INVISIBLE);
             }
 
             setKeysMargins(
@@ -85,6 +80,14 @@ public class KeyPad extends ConstraintLayout {
                     (int) array.getDimension(R.styleable.KeyPad_keysMargin, 0)
             );
 
+            if (array.getResourceId(R.styleable.KeyPad_leftKeyIcon, 0) != 0) {
+                setLeftKey(array.getResourceId(R.styleable.KeyPad_leftKeyIcon, 0));
+            }
+
+            if (array.getResourceId(R.styleable.KeyPad_rightKeyIcon, 0) != 0) {
+                setRightKey(array.getResourceId(R.styleable.KeyPad_rightKeyIcon, 0));
+            }
+
             setAllKeysParams(array);
 
             array.recycle();
@@ -92,32 +95,54 @@ public class KeyPad extends ConstraintLayout {
     }
 
     /**
-     * Sets the left button text and makes it visible
-     * Use setLeftKey(null) to hide the button
+     * Sets the left key icon and makes it visible
+     * Use setLeftKey(null) to hide the key
+     *
+     * @param iconRes Icon resource
+     */
+    public void setLeftKey(@DrawableRes int iconRes) {
+        left.setVisibility(VISIBLE);
+        left.setIcon(iconRes);
+    }
+
+    /**
+     * Sets the right key icon and makes it visible
+     * Use setRightKey(null) to hide the key
+     *
+     * @param iconRes Icon resource
+     */
+    public void setRightKey(@DrawableRes int iconRes) {
+        right.setVisibility(VISIBLE);
+        right.setIcon(iconRes);
+    }
+
+    /**
+     * Sets the left key text and makes it visible
+     * Use setLeftKey(null) to hide the key
      *
      * @param text Text, null to hide
      */
     public void setLeftKey(String text) {
         if (text != null) {
-            ((LinearLayout) left.getParent()).setVisibility(VISIBLE);
-            left.setValue(text);
+            left.setVisibility(VISIBLE);
+            left.setText(text);
         } else {
-            ((LinearLayout) left.getParent()).setVisibility(INVISIBLE);
+            left.setVisibility(INVISIBLE);
         }
     }
 
     /**
-     * Sets the right button text and makes it visible
-     * Use setRightKey(null) to hide the button
+     * Sets the right key text and makes it visible
+     * Use setRightKey(null) to hide the key
      *
      * @param text Text, null to hide
      */
     public void setRightKey(String text) {
         if (text != null) {
-            ((LinearLayout) right.getParent()).setVisibility(VISIBLE);
-            right.setValue(text);
+            right.setVisibility(VISIBLE);
+            right.setText(text);
         } else {
-            ((LinearLayout) right.getParent()).setVisibility(INVISIBLE);
+            right.setVisibility(INVISIBLE);
         }
     }
 
@@ -147,7 +172,7 @@ public class KeyPad extends ConstraintLayout {
      */
     public Key getKey(String text) {
         for (Key k : keys) {
-            if (k.getValue().equals(text)) {
+            if (k.getText().equals(text)) {
                 return k;
             }
         }
@@ -165,7 +190,7 @@ public class KeyPad extends ConstraintLayout {
         for (Key k : keys) {
             String str = String.valueOf(value);
 
-            if (k.getValue().equals(str)) {
+            if (k.getText().equals(str)) {
                 return k;
             }
         }
@@ -366,7 +391,7 @@ public class KeyPad extends ConstraintLayout {
      */
     public void setKeysTextColor(@ColorInt int color) {
         for (Key k : keys) {
-            k.setKeyTextColor(color);
+            k.setTextColor(color);
         }
     }
 
@@ -377,18 +402,18 @@ public class KeyPad extends ConstraintLayout {
      */
     public void setKeysWrapperBackground(@DrawableRes int background) {
         for (Key k : keys) {
-            k.setKeyWrapperBackground(background);
+            k.setWrapperBackground(background);
         }
     }
 
     /**
      * Sets the key text size to all keys
      *
-     * @param dp Text size in dp
+     * @param sp Text size in SP
      */
-    public void setKeysTextSize(int dp) {
+    public void setKeysTextSize(int sp) {
         for (Key k : keys) {
-            k.setKeyTextSize(dp);
+            k.setTextSize(sp);
         }
     }
 
@@ -418,17 +443,24 @@ public class KeyPad extends ConstraintLayout {
         int textColor = a.getColor(R.styleable.KeyPad_keysTextColor, getResources().getColor(android.R.color.darker_gray));
         int wrapperBackground = a.getResourceId(R.styleable.KeyPad_keysWrapperBackground, 0);
         int txtSize = a.getDimensionPixelSize(R.styleable.KeyPad_keysTextSize, 0);
+        int tint = a.getColor(R.styleable.KeyPad_keysIconTint,0);
 
         for (Key k : keys) {
-            ((TextView)k.getView()).setTextSize(
-                    TypedValue.COMPLEX_UNIT_PX,
-                    textSize
-            );
+            if (txtSize != 0){
+                k.getTextView().setTextSize(TypedValue.COMPLEX_UNIT_PX, txtSize);
+            }else{
+                k.setTextSize(Key.DEFAULT_TEXT_SIZE_SP);
+            }
+
+            if (tint != 0){
+                k.setIconTint(tint);
+            }
+
             k.setKeyBackground(background);
-            k.setKeyTextColor(textColor);
+            k.setTextColor(textColor);
 
             if (wrapperBackground != 0) {
-                k.setKeyWrapperBackground(wrapperBackground);
+                k.setWrapperBackground(wrapperBackground);
             }
         }
     }
