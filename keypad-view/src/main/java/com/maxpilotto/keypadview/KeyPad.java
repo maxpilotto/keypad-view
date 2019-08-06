@@ -2,19 +2,13 @@ package com.maxpilotto.keypadview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +53,18 @@ public class KeyPad extends ConstraintLayout {
             left = findViewById(R.id.left);
             right = findViewById(R.id.right);
 
-            if (array.getString(R.styleable.KeyPad_leftKeyText) != null){
+            if (array.getString(R.styleable.KeyPad_leftKeyText) != null) {
                 left.setText(array.getString(R.styleable.KeyPad_leftKeyText));
                 left.setVisibility(VISIBLE);
+            }else{
+                left.setVisibility(INVISIBLE);
             }
 
-            if (array.getString(R.styleable.KeyPad_rightKeyText) != null){
+            if (array.getString(R.styleable.KeyPad_rightKeyText) != null) {
                 right.setText(array.getString(R.styleable.KeyPad_rightKeyText));
                 right.setVisibility(VISIBLE);
+            }else{
+                right.setVisibility(INVISIBLE);
             }
 
             setKeysMargins(
@@ -213,110 +211,6 @@ public class KeyPad extends ConstraintLayout {
     }
 
     /**
-     * Sets the margins of the given key
-     *
-     * @param text   Text of the key to change
-     * @param left   Left margin
-     * @param top    Top margin
-     * @param right  Right margin
-     * @param bottom Bottom margin
-     */
-    public void setKeyMargins(String text, int left, int top, int right, int bottom) {
-        setKeyMargins(getKey(text), left, top, right, bottom);
-    }
-
-    /**
-     * Sets the margins of the given key
-     *
-     * @param value  Value of the key to change
-     * @param left   Left margin
-     * @param top    Top margin
-     * @param right  Right margin
-     * @param bottom Bottom margin
-     */
-    public void setKeyMargins(Integer value, int left, int top, int right, int bottom) {
-        setKeyMargins(getKey(value), left, top, right, bottom);
-    }
-
-    /**
-     * Sets the margins of the given key
-     *
-     * @param key    Key to change
-     * @param left   Left margin
-     * @param top    Top margin
-     * @param right  Right margin
-     * @param bottom Bottom margin
-     */
-    public void setKeyMargins(Key key, int left, int top, int right, int bottom) {
-        if (key != null) {
-            ConstraintLayout.LayoutParams params = (LayoutParams) key.getLayoutParams();
-
-            params.setMargins(left, top, right, bottom);
-        }
-    }
-
-    /**
-     * Fixes the width for when WRAP_CONTENT is used <br> <br>
-     * Explanation: The view width won't work if WRAP_CONTENT is set, this is due to the ConstraintLayout, <br>
-     * the only way of fixing this is by calculating the minimum width and setting it
-     */
-    private void fixWidth() {    //FIXME Doesn't work
-        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override public void onGlobalLayout() {
-                Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-                ViewGroup.LayoutParams params = getLayoutParams();
-                DisplayMetrics metrics = new DisplayMetrics();
-
-                display.getMetrics(metrics);
-
-                int widthSpec = View.MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-                int heightSpec = View.MeasureSpec.makeMeasureSpec(metrics.heightPixels, MeasureSpec.AT_MOST);
-
-                measure(widthSpec, heightSpec);
-
-                params.width = getMeasuredWidth();
-                setLayoutParams(params);
-
-                if (Build.VERSION.SDK_INT < 16) {
-                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                } else {
-                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-            }
-        });
-    }
-
-    /**
-     * Sets the margins of the given key
-     *
-     * @param text   Text of the key to change
-     * @param margin Margin of all sides
-     */
-    public void setKeyMargins(String text, int margin) {
-        setKeyMargins(getKey(text), margin, margin, margin, margin);
-    }
-
-    /**
-     * Sets the margins of the given key
-     *
-     * @param value  Value of the key to change
-     * @param margin Margin of all sides
-     */
-    public void setKeyMargins(Integer value, int margin) {
-        setKeyMargins(getKey(value), margin, margin, margin, margin);
-    }
-
-    /**
-     * Sets the margins of the given key
-     *
-     * @param key    Key to change
-     * @param margin Margin of all sides
-     */
-    public void setKeyMargins(Key key, int margin) {
-        setKeyMargins(key, margin, margin, margin, margin);
-    }
-
-    /**
      * Sets the all the keys' margins
      *
      * @param left   Left margin
@@ -326,7 +220,9 @@ public class KeyPad extends ConstraintLayout {
      */
     public void setKeysMargins(int left, int top, int right, int bottom) {
         for (Key k : keys) {
-            setKeyMargins(k, left, top, right, bottom);
+            ConstraintLayout.LayoutParams params = (LayoutParams) k.getLayoutParams();
+
+            params.setMargins(left, top, right, bottom);
         }
     }
 
@@ -418,6 +314,28 @@ public class KeyPad extends ConstraintLayout {
     }
 
     /**
+     * Sets the tint to all keys that are icons
+     *
+     * @param color Color
+     */
+    public void setKeysTint(@ColorInt int color) {
+        for (Key k : keys){
+            k.setIconTint(color);
+        }
+    }
+
+    /**
+     * Sets the size to all keys that are icons
+     *
+     * @param size Size in pixels
+     */
+    public void setKeysIconSize(int size) {
+        for (Key k : keys) {
+            k.setIconSize(size);
+        }
+    }
+
+    /**
      * Recursively searches for all Key views
      *
      * @param root The root from which the search starts
@@ -443,24 +361,29 @@ public class KeyPad extends ConstraintLayout {
         int textColor = a.getColor(R.styleable.KeyPad_keysTextColor, getResources().getColor(android.R.color.darker_gray));
         int wrapperBackground = a.getResourceId(R.styleable.KeyPad_keysWrapperBackground, 0);
         int txtSize = a.getDimensionPixelSize(R.styleable.KeyPad_keysTextSize, 0);
-        int tint = a.getColor(R.styleable.KeyPad_keysIconTint,0);
+        int tint = a.getColor(R.styleable.KeyPad_keysIconTint, 0);
+        int size = a.getDimensionPixelSize(R.styleable.KeyPad_keysIconSize, 0);
 
         for (Key k : keys) {
-            if (txtSize != 0){
-                k.getTextView().setTextSize(TypedValue.COMPLEX_UNIT_PX, txtSize);
-            }else{
-                k.setTextSize(Key.DEFAULT_TEXT_SIZE_SP);
-            }
-
-            if (tint != 0){
-                k.setIconTint(tint);
-            }
-
             k.setKeyBackground(background);
             k.setTextColor(textColor);
 
+            if (txtSize != 0) {
+                k.getTextView().setTextSize(TypedValue.COMPLEX_UNIT_PX, txtSize);
+            } else {
+                k.setTextSize(Key.DEFAULT_TEXT_SIZE_SP);
+            }
+
+            if (tint != 0) {
+                k.setIconTint(tint);
+            }
+
             if (wrapperBackground != 0) {
                 k.setWrapperBackground(wrapperBackground);
+            }
+
+            if (size != 0) {
+                k.setIconSize(size);
             }
         }
     }

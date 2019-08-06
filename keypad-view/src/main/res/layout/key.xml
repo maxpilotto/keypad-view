@@ -7,15 +7,16 @@
     android:clickable="true"
     android:focusable="true"
     android:id="@+id/root"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/key_background"
-        android:gravity="center"
         android:textSize="24sp"
+        android:gravity="center"
         android:text="K"
         android:visibility="visible"/>
 
@@ -23,7 +24,6 @@
         android:id="@+id/icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:background="@drawable/key_background"
         android:visibility="gone" />
 

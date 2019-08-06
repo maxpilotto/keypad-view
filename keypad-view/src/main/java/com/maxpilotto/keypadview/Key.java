@@ -6,9 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -57,8 +55,8 @@ public class Key extends LinearLayout {
                 text.setTextSize(DEFAULT_TEXT_SIZE_SP);
             }
 
-            if (a.getInteger(R.styleable.Key_keyIconSize, 0) != 0) {
-                setIconSize(a.getInteger(R.styleable.Key_keyIconSize, 0));
+            if (a.getDimensionPixelSize(R.styleable.Key_keyIconSize, 0) != 0) {
+                setIconSize(a.getDimensionPixelSize(R.styleable.Key_keyIconSize, 0));
             }
 
             if (a.getResourceId(R.styleable.Key_keyWrapperBackground, 0) != 0) {
@@ -202,16 +200,15 @@ public class Key extends LinearLayout {
     }
 
     /**
-     * Sets the sizes of the icon, this will set both width and height
+     * Sets the sizes of the key, this will set both width and height
      *
-     * @param size Sizes (width and height) in DP
+     * @param size Sizes (width and height) in PX
      */
     public void setIconSize(int size) {
-        LinearLayout.LayoutParams params = (LayoutParams) icon.getLayoutParams();
-        int pixels = (int) (size * ((float) getContext().getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT));
+        LayoutParams params = (LayoutParams) icon.getLayoutParams();
 
-        params.width = pixels;
-        params.height = pixels;
+        params.width = size;
+        params.height = size;
     }
 
     /**
