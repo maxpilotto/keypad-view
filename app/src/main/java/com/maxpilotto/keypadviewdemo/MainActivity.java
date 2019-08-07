@@ -5,8 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 
-import com.maxpilotto.keypadview.Key;
 import com.maxpilotto.keypadview.KeyPad;
+
+import kotlin.Unit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,41 +18,27 @@ public class MainActivity extends AppCompatActivity {
 
         KeyPad keypad = findViewById(R.id.keypad1);
 
-        keypad.setOnClickListener(new KeyPad.KeyClickListener() {
-            @Override public void onClick(Key key) {
-                Log.d("KeyPadView", "Clicked: " + key.getText());
-            }
+        keypad.onClick(key -> {
+            Log.d("KeyPadView", "Clicked: " + key.getText());
+
+            return Unit.INSTANCE;   // Kotlin compatibility
         });
 
-        keypad.setOnLongClickListener(new KeyPad.KeyLongClickListener() {
-            @Override public boolean onLongClick(Key key) {
-                Log.d("KeyPadView", "Long clicked: " + key.getText());
+        keypad.onLongClick(key -> {
+            Log.d("KeyPadView", "Long clicked: " + key.getText());
 
-                return true;
-            }
+            return true;
         });
-
-        keypad.getKey(1).setKeyBackground(R.drawable.bg_green);
-        keypad.getKey(4).setKeyBackground(R.drawable.bg_green);
-        keypad.getKey(7).setKeyBackground(R.drawable.bg_green);
-        keypad.getKey(2).setKeyBackground(R.drawable.key_background);
-        keypad.getKey(5).setKeyBackground(R.drawable.key_background);
-        keypad.getKey(8).setKeyBackground(R.drawable.key_background);
-        keypad.getKey(3).setKeyBackground(R.drawable.bg_red);
-        keypad.getKey(6).setKeyBackground(R.drawable.bg_red);
-        keypad.getKey(9).setKeyBackground(R.drawable.bg_red);
-        keypad.getKey(0).setKeyBackground(R.drawable.bg_blue);
-
-        keypad.getRightKey().setKeyBackground(0);
+        keypad.setKeysBackground(android.R.color.transparent);
         keypad.getRightKey().setIconSize(
                 (int) TypedValue.applyDimension(
                         TypedValue.COMPLEX_UNIT_DIP,
-                        15,
+                        30,
                         getResources().getDisplayMetrics()
                 )
         );
 
-        keypad.setKeysMargins(30);
+        keypad.setMargins(30);
     }
 }
 
