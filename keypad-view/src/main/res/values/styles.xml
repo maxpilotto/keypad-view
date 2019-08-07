@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="Key">
-        <!-- Key's text -->
+        <!-- Key's text, this will hide the icon -->
         <attr name="keyValue" format="string"/>
-
-        <!-- Key's background -->
-        <attr name="keyBackground" format="reference"/>
 
         <!-- Key's text color -->
         <attr name="keyTextColor" format="color"/>
 
-        <!-- Key wrapper layout's background -->
-        <attr name="keyWrapperBackground" format="reference"/>
-
-        <!-- Size of the key's text -->
+        <!-- Key's text size -->
         <attr name="keyTextSize" format="dimension"/>
 
-        <!-- Icon of the Key, will replace the text -->
+        <!-- Key's icon, this will hide the text -->
         <attr name="keyIcon" format="reference"/>
 
-        <!-- Tint of the icon -->
+        <!-- Key's icon tint -->
         <attr name="keyTint" format="color"/>
 
-        <!-- Size of the key's icon, this covers both width and height -->
+        <!-- Key's icon size, this covers both width and height -->
         <attr name="keyIconSize" format="dimension"/>
+
+        <!-- Key's background -->
+        <attr name="keyBackground" format="reference"/>
+
+        <!-- Key's wrapper background, this is a wrapper that wraps the text/icon, it is used to set a ripple effect -->
+        <attr name="keyWrapperBackground" format="reference"/>
     </declare-styleable>
     <declare-styleable name="KeyPad">
         <!-- Text of the bottom left button -->
@@ -43,6 +43,12 @@
 
         <!-- Key's text color for all keys -->
         <attr name="keysTextColor" format="color"/>
+
+        <!-- Tint for all keys that are icons -->
+        <attr name="keysIconTint" format="color"/>
+
+        <!-- Size for all keys that are icons -->
+        <attr name="keysIconSize" format="dimension"/>
 
         <!-- Key wrapper layout's background for all keys -->
         <attr name="keysWrapperBackground" format="reference"/>
@@ -64,11 +70,5 @@
 
         <!-- Margin right for each key -->
         <attr name="keysMarginRight" format="dimension"/>
-
-        <!-- Tint for all keys that are icons -->
-        <attr name="keysIconTint" format="color"/>
-
-        <!-- Size for all keys that are icons -->
-        <attr name="keysIconSize" format="dimension"/>
     </declare-styleable>
 </resources>

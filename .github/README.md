@@ -11,10 +11,9 @@ An Android view that can be used to display a keypad
 dependencies {
 	implementation 'com.maxpilotto:keypad-view:3.0'
 	
-	
+	// One of these might be needed
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'		// If you ARE NOT using AndroidX
 	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'	// If you ARE using AndroidX
-
 }
 ```
 
@@ -44,14 +43,16 @@ dependencies {
 ### Java
 ```Java
 KeyPad keypad = findViewById(R.id.keypad1);
+
 keypad.setOnClickListener(new KeyPad.KeyClickListener() {
     @Override public void onClick(Key key) {
-        Log.d("KeyPadView", "Clicked: " + key.getKey());
+        Log.d("KeyPadView", "Clicked: " + key.getText());
     }
 });
+
 keypad.setOnLongClickListener(new KeyPad.KeyLongClickListener() {
     @Override public boolean onLongClick(Key key) {
-        Log.d("KeyPadView", "Long clicked: " + key.getKey());
+        Log.d("KeyPadView", "Long clicked: " + key.getText());
 
         return true;
     }
@@ -78,7 +79,7 @@ The old Keypad layout used to have a wrapper around the Key and then a horizonta
     <com.maxpilotto.keypadview.Key
         android:layout_width="60dp"
         android:layout_height="60dp"
-        app:keyValue="1"/>
+        app:keyText="1"/>
 
 </LinearLayout>
 ```
@@ -99,7 +100,7 @@ The row could look like this
         <com.maxpilotto.keypadview.Key
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:keyValue="1"/>
+            app:keyText="1"/>
 
     </LinearLayout>
 
@@ -112,7 +113,7 @@ The row could look like this
         <com.maxpilotto.keypadview.Key
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:keyValue="2"/>
+            app:keyText="2"/>
 
     </LinearLayout>
 
@@ -125,7 +126,7 @@ The row could look like this
         <com.maxpilotto.keypadview.Key
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:keyValue="3"/>
+            app:keyText="3"/>
 
     </LinearLayout>
 
