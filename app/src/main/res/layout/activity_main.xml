@@ -10,9 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:keysBackground="@android:color/transparent"
-        app:rightKeyIcon="@drawable/check"
+        app:keysIconSize="30dp"
+        app:keysTextColor="#000000"
         app:keysTextSize="20dp"
-        app:keysIconTint="@color/colorPrimary"
-        app:keysIconSize="30dp"/>
+        app:leftKeyIcon="@drawable/fingerprint"
+        app:rightKeyIcon="@drawable/check" />
 
 </LinearLayout>
