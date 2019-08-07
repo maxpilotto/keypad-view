@@ -143,7 +143,7 @@
         app:layout_constraintTop_toBottomOf="@+id/row3">
 
         <com.maxpilotto.keypadview.Key
-            android:id="@+id/left"
+            android:id="@+id/kl"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:keyValue="Left"
@@ -159,13 +159,13 @@
             android:layout_height="60dp"
             app:keyValue="0"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/right"
+            app:layout_constraintEnd_toStartOf="@+id/kr"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/left"
+            app:layout_constraintStart_toEndOf="@+id/kl"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.maxpilotto.keypadview.Key
-            android:id="@+id/right"
+            android:id="@+id/kr"
             android:layout_width="60dp"
             android:layout_height="60dp"
             app:keyValue="Right"

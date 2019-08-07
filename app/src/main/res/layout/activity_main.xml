@@ -14,6 +14,8 @@
         app:keysTextColor="#000000"
         app:keysTextSize="20dp"
         app:leftKeyIcon="@drawable/fingerprint"
-        app:rightKeyIcon="@drawable/check" />
+        app:rightKeyIcon="@drawable/check"
+        app:keysIconTint="?attr/colorPrimary"
+        app:keysMargin="10dp" />
 
 </LinearLayout>

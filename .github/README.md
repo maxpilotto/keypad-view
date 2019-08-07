@@ -1,19 +1,22 @@
 # keypad-view
 An Android view that can be used to display a keypad
 
-<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s1.png" width="200">
-<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s2.png" width="200">
-<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s3.png" width="200">
-<img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s4.png" width="200">
+<div float="left">
+    <img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s1.png" width="300">
+    <img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s2.png" width="300">
+    <img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s3.png" width="300">
+    <img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s4.png" width="300">
+    <img src="https://github.com/maxpilotto/keypad-view/blob/master/.github/s5.png" width="300">
+</div>
 
 # Getting started
 ```gradle 
 dependencies {
-	implementation 'com.maxpilotto:keypad-view:3.0'
+    implementation 'com.maxpilotto:keypad-view:3.0'
 	
-	// One of these might be needed
+	// One of these might be needed, the version can be changed
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'		// If you ARE NOT using AndroidX
-	implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'	// If you ARE using AndroidX
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'	// If you ARE using AndroidX
 }
 ```
 
@@ -23,39 +26,31 @@ dependencies {
 <com.maxpilotto.keypadview.KeyPad
     android:id="@+id/keypad1"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:keysBackground="@drawable/bg_green"
-    app:keysTextColor="@android:color/holo_green_dark" />
-
-<com.maxpilotto.keypadview.KeyPad
-    android:id="@+id/keypad2"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:showLeftButton="true"
-    app:leftButtonText="DEL"
-    app:showRightButton="true"
-    app:rightButtonText="OK"
-    app:keysTextColor="@android:color/holo_red_dark"
-    app:keysBackground="@drawable/bg_red"
-    app:keysWrapperBackground="?attr/selectableItemBackground" />
+    android:layout_height="match_parent"
+    app:keysBackground="@android:color/transparent"
+    app:keysIconSize="30dp"
+    app:keysTextColor="#000000"
+    app:keysTextSize="20dp"
+    app:leftKeyIcon="@drawable/fingerprint"
+    app:rightKeyIcon="@drawable/check" 
+    app:keysIconTint="?attr/colorPrimary"
+    app:keysMargin="10dp" />
 ```
 
 ### Java
 ```Java
 KeyPad keypad = findViewById(R.id.keypad1);
 
-keypad.setOnClickListener(new KeyPad.KeyClickListener() {
-    @Override public void onClick(Key key) {
-        Log.d("KeyPadView", "Clicked: " + key.getText());
-    }
+keypad.onClick(key -> {
+    Log.d("KeyPadView", "Clicked: " + key.getText());
+
+    return Unit.INSTANCE;   // Kotlin compatibility
 });
 
-keypad.setOnLongClickListener(new KeyPad.KeyLongClickListener() {
-    @Override public boolean onLongClick(Key key) {
-        Log.d("KeyPadView", "Long clicked: " + key.getText());
+keypad.onLongClick(key -> {
+    Log.d("KeyPadView", "Long clicked: " + key.getText());
 
-        return true;
-    }
+    return true;
 });
 ```
 
