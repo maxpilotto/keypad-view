@@ -42,7 +42,7 @@ class Key : LinearLayout {
     /**
      * Key's text, this will hide the icon
      */
-    var text: String
+    var text: String?
         set(value) {
             hideIcon()
 
