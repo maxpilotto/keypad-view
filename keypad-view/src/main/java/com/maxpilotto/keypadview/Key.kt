@@ -30,8 +30,6 @@ import kotlinx.android.synthetic.main.key.view.*
 
 /**
  * Representation of a single Keypad key
- *
- * Created on 07/08/2019 at 15:55
  */
 class Key : LinearLayout {
     /**
@@ -132,47 +130,44 @@ class Key : LinearLayout {
         wrapperBackground = 0
     }
 
-    constructor(context: Context) : this(context, null, 0)
+    constructor(
+        context: Context,
+        attrs: AttributeSet?
+    ) : super(context, attrs) {
+        inflate(context, R.layout.key, this)
 
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+        val array = context.obtainStyledAttributes(attrs, R.styleable.Key)
+        val textSize = array.getDimensionPixelSize(R.styleable.Key_keyTextSize, 0)
+        val icon = array.getResourceId(R.styleable.Key_keyIcon, 0)
+        val iconSize = array.getDimensionPixelSize(R.styleable.Key_keyIconSize, 0)
+        val tint = array.getColor(R.styleable.Key_keyTint, 0)
+        val wrapper = array.getResourceId(R.styleable.Key_keyWrapperBackground, 0)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        View.inflate(context, R.layout.key, this)
+        text = array.getString(R.styleable.Key_keyValue)
+        textColor = array.getColor(R.styleable.Key_keyTextColor, 0)
+        background = array.getResourceId(R.styleable.Key_keyBackground, R.drawable.key_background)
 
-        if (attrs != null) {
-            val array = context.obtainStyledAttributes(attrs, R.styleable.Key, defStyleAttr, 0)
-            val textSize = array.getDimensionPixelSize(R.styleable.Key_keyTextSize, 0)
-            val icon = array.getResourceId(R.styleable.Key_keyIcon, 0)
-            val iconSize = array.getDimensionPixelSize(R.styleable.Key_keyIconSize, 0)
-            val tint = array.getColor(R.styleable.Key_keyTint, 0)
-            val wrapper = array.getResourceId(R.styleable.Key_keyWrapperBackground, 0)
-
-            text = array.getString(R.styleable.Key_keyValue)
-            textColor = array.getColor(R.styleable.Key_keyTextColor, 0)
-            background = array.getResourceId(R.styleable.Key_keyBackground, R.drawable.key_background)
-
-            if (textSize != 0) {
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
-            }
-
-            if (icon != 0) {
-                this.icon = icon
-            }
-
-            if (iconSize != 0) {
-                this.iconSize = iconSize
-            }
-
-            if (tint != 0) {
-                this.iconTint = tint
-            }
-
-            if (wrapper != 0) {
-                this.wrapperBackground = wrapper
-            }
-
-            array.recycle()
+        if (textSize != 0) {
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize.toFloat())
         }
+
+        if (icon != 0) {
+            this.icon = icon
+        }
+
+        if (iconSize != 0) {
+            this.iconSize = iconSize
+        }
+
+        if (tint != 0) {
+            this.iconTint = tint
+        }
+
+        if (wrapper != 0) {
+            this.wrapperBackground = wrapper
+        }
+
+        array.recycle()
     }
 
     override fun setOnClickListener(l: OnClickListener?) {

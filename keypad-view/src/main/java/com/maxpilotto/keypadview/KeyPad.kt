@@ -22,14 +22,11 @@ import android.support.annotation.DrawableRes
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.keypad.view.*
 
 /**
  * View that shows and handles a customizable KeyPad
- *
- * Created on 07/08/2019 at 18:55
  */
 class KeyPad : ConstraintLayout {
     /**
@@ -53,12 +50,12 @@ class KeyPad : ConstraintLayout {
             return kr
         }
 
-    constructor(context: Context) : this(context, null, 0)
-
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        View.inflate(context, R.layout.keypad, this)
+    @JvmOverloads
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null
+    ) : super(context, attrs) {
+        inflate(context, R.layout.keypad, this)
 
         keys = mutableListOf()
         findAllKeys(this, keys)
@@ -67,27 +64,26 @@ class KeyPad : ConstraintLayout {
             k.position = i
         }
 
-        if (attrs != null) {
-            val array = context.obtainStyledAttributes(attrs, R.styleable.KeyPad, defStyleAttr, 0)
-            val textSize = array.getDimensionPixelSize(R.styleable.KeyPad_keysTextSize, 0)
-            val iconSize = array.getDimensionPixelSize(R.styleable.KeyPad_keysIconSize, 0)
-            val tint = array.getColor(R.styleable.KeyPad_keysIconTint, 0)
-            val wrapper = array.getResourceId(R.styleable.KeyPad_keysWrapperBackground, 0)
-            val background = array.getResourceId(R.styleable.KeyPad_keysBackground, R.drawable.key_background)
-            val textColor = array.getColor(R.styleable.KeyPad_keysTextColor, 0)
-            val leftText = array.getString(R.styleable.KeyPad_leftKeyText)
-            val rightText = array.getString(R.styleable.KeyPad_rightKeyText)
-            val leftIcon = array.getResourceId(R.styleable.KeyPad_leftKeyIcon, 0)
-            val rightIcon = array.getResourceId(R.styleable.KeyPad_rightKeyIcon, 0)
+        with(context.obtainStyledAttributes(attrs, R.styleable.KeyPad)) {
+            val textSize = getDimensionPixelSize(R.styleable.KeyPad_keysTextSize, 0)
+            val iconSize = getDimensionPixelSize(R.styleable.KeyPad_keysIconSize, 0)
+            val tint = getColor(R.styleable.KeyPad_keysIconTint, 0)
+            val wrapper = getResourceId(R.styleable.KeyPad_keysWrapperBackground, 0)
+            val background = getResourceId(R.styleable.KeyPad_keysBackground, R.drawable.key_background)
+            val textColor = getColor(R.styleable.KeyPad_keysTextColor, 0)
+            val leftText = getString(R.styleable.KeyPad_leftKeyText)
+            val rightText = getString(R.styleable.KeyPad_rightKeyText)
+            val leftIcon = getResourceId(R.styleable.KeyPad_leftKeyIcon, 0)
+            val rightIcon = getResourceId(R.styleable.KeyPad_rightKeyIcon, 0)
 
             setMargins(
-                    array.getDimension(R.styleable.KeyPad_keysMarginLeft, 0f).toInt(),
-                    array.getDimension(R.styleable.KeyPad_keysMarginTop, 0f).toInt(),
-                    array.getDimension(R.styleable.KeyPad_keysMarginRight, 0f).toInt(),
-                    array.getDimension(R.styleable.KeyPad_keysMarginBottom, 0f).toInt()
+                getDimension(R.styleable.KeyPad_keysMarginLeft, 0f).toInt(),
+                getDimension(R.styleable.KeyPad_keysMarginTop, 0f).toInt(),
+                getDimension(R.styleable.KeyPad_keysMarginRight, 0f).toInt(),
+                getDimension(R.styleable.KeyPad_keysMarginBottom, 0f).toInt()
             )
 
-            setMargins(array.getDimension(R.styleable.KeyPad_keysMargin, 0f).toInt())
+            setMargins(getDimension(R.styleable.KeyPad_keysMargin, 0f).toInt())
 
             for (k in keys) {
                 k.background = background
@@ -134,7 +130,7 @@ class KeyPad : ConstraintLayout {
                 rightKey.show()
             }
 
-            array.recycle()
+            recycle()
         }
     }
 
