@@ -20,7 +20,7 @@ repositories {
 In your modules's `build.gradle`
 ```gradle 
 dependencies {
-    implementation 'com.github.maxpilotto:keypad-view:4.0'
+    implementation 'com.github.maxpilotto:keypad-view:$latest_version'
 }
 ```
 
